@@ -1,0 +1,298 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: "Google Sans", "Segoe UI", Roboto, Arial, sans-serif;
+    color-scheme: dark;
+}
+
+body {
+    min-height: 100vh;
+    background: #1f2021;
+    color: #e8eaed;
+    display: flex;
+    justify-content: center;
+}
+
+.page {
+    width: min(100%, 1280px);
+    padding: 90px 0 0;
+}
+
+.login-card {
+    width: 100%;
+    min-height: 575px;
+    background: #0f0f0f;
+    border-radius: 38px;
+    padding: 55px 53px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 70px;
+}
+
+.brand {
+    grid-column: 1;
+}
+
+.google-logo {
+    width: 58px;
+    height: 58px;
+    display: block;
+}
+
+.content {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 70px;
+    margin-top: -2px;
+}
+
+.intro {
+    padding-top: 2px;
+}
+
+.intro h1 {
+    font-size: 48px;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -1.6px;
+    color: #e8eaed;
+    margin-bottom: 24px;
+}
+
+.intro p {
+    font-size: 23px;
+    line-height: 1.4;
+    color: #e8eaed;
+}
+
+.login-form {
+    padding-top: 4px;
+}
+
+.field {
+    width: 100%;
+}
+
+.field input {
+    width: 100%;
+    height: 80px;
+    padding: 0 22px;
+    border: 1px solid #9aa0a6;
+    border-radius: 6px;
+    outline: none;
+    background: transparent;
+    color: #e8eaed;
+    font-size: 22px;
+    font-family: inherit;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.field input::placeholder {
+    color: #c5c7c9;
+    opacity: 1;
+}
+
+.field input:focus {
+    border: 2px solid #a8c7fa;
+    box-shadow: inset 0 0 0 1px #a8c7fa;
+    padding: 0 21px;
+}
+
+.link {
+    color: #a8c7fa;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.login-form > .link {
+    display: inline-block;
+    margin-top: 17px;
+}
+
+.guest-info {
+    margin-top: 68px;
+    max-width: 560px;
+    color: #c4c7c5;
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+.guest-info .inline {
+    display: inline;
+    font-size: inherit;
+}
+
+.actions {
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create {
+    font-size: 18px;
+}
+
+.next-button {
+    border: 0;
+    background: #a8c7fa;
+    color: #0b1b2e;
+    min-width: 156px;
+    height: 58px;
+    padding: 0 28px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s, box-shadow .15s;
+}
+
+.next-button:hover {
+    background: #c0d7ff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.35);
+}
+
+.footer {
+    height: 88px;
+    padding: 22px 22px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    color: #c4c7c5;
+}
+
+.language {
+    border: 0;
+    background: transparent;
+    color: #e8eaed;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.language span {
+    color: #aeb1b5;
+    margin-left: 10px;
+}
+
+.footer nav {
+    display: flex;
+    gap: 32px;
+    padding-top: 5px;
+}
+
+.footer nav a {
+    color: #e8eaed;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer nav a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .page {
+        padding: 24px 16px;
+    }
+
+    .login-card {
+        min-height: auto;
+        border-radius: 28px;
+        padding: 36px 30px;
+        display: block;
+    }
+
+    .content {
+        display: block;
+        margin-top: 34px;
+    }
+
+    .intro h1 {
+        font-size: 36px;
+    }
+
+    .intro p {
+        font-size: 18px;
+        margin-bottom: 38px;
+    }
+
+    .guest-info {
+        margin-top: 42px;
+    }
+
+    .actions {
+        margin-top: 42px;
+    }
+
+    .footer {
+        padding: 18px 8px;
+        height: auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .login-card {
+        padding: 28px 22px;
+    }
+
+    .google-logo {
+        width: 48px;
+        height: 48px;
+    }
+
+    .intro h1 {
+        font-size: 30px;
+        letter-spacing: -.8px;
+    }
+
+    .field input {
+        height: 62px;
+        font-size: 17px;
+    }
+
+    .link,
+    .create {
+        font-size: 15px;
+    }
+
+    .guest-info {
+        font-size: 14px;
+    }
+
+    .actions {
+        gap: 20px;
+    }
+
+    .next-button {
+        min-width: 120px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .footer nav {
+        gap: 20px;
+    }
+
+    .footer nav a {
+        font-size: 14px;
+    }
+}
