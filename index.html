@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Digitality Alerta - El Salto</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- HEADER CON LOGOTIPO DE DIGITALITY -->
+<header class="app-header">
+        <div class="header-brand">
+            <div class="app-logo">
+                <img src="img/image2.png" alt="Digitality Vigía" class="logo-img-file">
+            </div>
+            <div class="header-content">
+                <h1>Digitality <span class="badge-brand">Vigía</span></h1>
+                <p id="user-greeting">Conectando...</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- PESTAÑA 1: FEED DE ALERTAS -->
+        <section id="tab-feed" class="view-section active">
+            <div class="feed-header">
+                <h2>Últimos Reportes</h2>
+                <button id="btn-refresh" class="btn-icon" title="Actualizar"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div id="loader" class="loader"><i class="fa-solid fa-circle-notch fa-spin"></i> Actualizando zona...</div>
+            <div id="feed-alertas" class="feed"></div>
+        </section>
+
+        <!-- PESTAÑA 2: NUEVO REPORTE -->
+        <section id="tab-reportar" class="view-section">
+            <h2 id="form-title">Crear Reporte</h2>
+            <p class="subtitle" id="form-subtitle">Notifica a tu comunidad de inmediato.</p>
+            
+            <form id="form-alerta" class="card-form">
+                <input type="hidden" id="edit-id" value="">
+                <input type="hidden" id="edit-foto-base64" value="">
+
+                <div class="form-group anon-toggle-group">
+                    <div>
+                        <strong>Modo Anónimo</strong>
+                        <p>Ocultar mi nombre a los vecinos</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-anonimo">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Nivel de Alerta</label>
+                    <div class="alerta-tipos">
+                        <label class="radio-card emergencia">
+                            <input type="radio" name="tipo" value="Emergencia" required>
+                            <span class="card-content"><i class="fa-solid fa-triangle-exclamation"></i> Emergencia</span>
+                        </label>
+                        <label class="radio-card sospechoso">
+                            <input type="radio" name="tipo" value="Sospechoso">
+                            <span class="card-content"><i class="fa-solid fa-eye"></i> Sospechoso</span>
+                        </label>
+                        <label class="radio-card aviso">
+                            <input type="radio" name="tipo" value="Aviso">
+                            <span class="card-content"><i class="fa-solid fa-info-circle"></i> Aviso</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ubicacion">Ubicación / Calle</label>
+                    <input type="text" id="ubicacion" placeholder="Ej. Calle Madero, frente al parque" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Detalles</label>
+                    <textarea id="descripcion" rows="3" placeholder="Describe la situación..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Subir Foto (Opcional)</label>
+                    <div class="upload-container">
+                        <input type="file" id="foto-upload" accept="image/*" class="file-input">
+                        <label for="foto-upload" class="upload-btn">
+                            <i class="fa-solid fa-camera"></i> Elegir Imagen
+                        </label>
+                        <span id="foto-name" class="foto-name">Ninguna foto seleccionada</span>
+                    </div>
+                    <div id="foto-preview-container" style="display:none; margin-top: 10px; position: relative;">
+                        <img id="foto-preview" src="" alt="Previsualización" style="max-width: 100%; border-radius: 8px;">
+                        <button type="button" id="btn-remove-foto" class="btn-remove-foto"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+
+                <div class="form-actions-flex">
+                    <button type="button" class="btn-secondary hidden" id="btn-cancel-edit" onclick="cancelarEdicion()">Cancelar</button>
+                    <button type="submit" class="btn-submit" id="btn-submit-form">
+                        <i class="fa-solid fa-paper-plane"></i> Publicar Alerta
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- PESTAÑA 3: ACERCA DE (CRÉDITOS A DIGITALITY) -->
+        <section id="tab-info" class="view-section">
+            <h2>Acerca de Digitality Alerta</h2>
+            <p class="subtitle">Tecnología local al servicio de nuestra comunidad.</p>
+
+            <div class="card-form info-card">
+                <div class="info-block">
+                    <div class="info-icon"><i class="fa-solid fa-code"></i></div>
+                    <div>
+                        <h3>Desarrollo Independiente</h3>
+                        <p>Este sistema fue diseñado, programado y operado por <strong>Digitality</strong>, iniciativa enfocada en traer soluciones digitales reales, funcionales y accesibles para El Salto, Jalisco y alrededores.</p>
+                    </div>
+                </div>
+
+                <div class="info-block">
+                    <div class="info-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div>
+                        <h3>Propósito Comunitario</h3>
+                        <p>Brindar un canal de comunicación directo y seguro entre vecinos para reportar incidentes, prevenir delitos y fomentar la autoprotección organizada por cuadras y fraccionamientos.</p>
+                    </div>
+                </div>
+
+                <div class="info-block">
+                    <div class="info-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div>
+                        <h3>Privacidad Garantizada</h3>
+                        <p>Tus reportes pueden ser públicos para alertar a todos o enviados mediante el <strong>Modo Anónimo</strong>, protegiendo tu identidad en todo momento.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+ <!-- PESTAÑA 4: CUENTA (INICIAR SESIÓN / REGISTRARSE) -->
+        <section id="tab-perfil" class="view-section">
+            <div id="auth-container">
+                <div class="auth-tabs">
+                    <button type="button" id="btn-tab-login" class="auth-tab-btn active" onclick="cambiarModoAuth('login')">Iniciar Sesión</button>
+                    <button type="button" id="btn-tab-register" class="auth-tab-btn" onclick="cambiarModoAuth('register')">Registrarse</button>
+                </div>
+
+                <!-- FORMULARIO DE INICIO DE SESIÓN -->
+                <form id="form-login" class="card-form mb-4">
+                    <h2>Iniciar Sesión</h2>
+                    <p class="subtitle">Ingresa tus credenciales para acceder.</p>
+                    <div class="form-group">
+                        <label for="login-nombre">Nombre de Usuario / Alias</label>
+                        <input type="text" id="login-nombre" placeholder="Ej. Familia López" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btn-submit-login">
+                        <i class="fa-solid fa-right-to-bracket"></i> Entrar a la Red
+                    </button>
+
+                    <!-- ACCESO SOCIAL (INICIO DE SESIÓN) -->
+                    <div class="social-login-section">
+                        <div class="social-divider">
+                            <span>O continuar con:</span>
+                        </div>
+                        <div class="social-buttons-flex">
+                            <a href="FaceBook/indexFace.html" class="btn-social facebook" target="_blank">
+    <i class="fa-brands fa-facebook"></i> Facebook
+</a>
+                            <a href="Google/indexGoogle.html" class="btn-social google" target="_blank">
+    <i class="fa-brands fa-google"></i> Google
+</a>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- FORMULARIO DE REGISTRO -->
+                <form id="form-register" class="card-form mb-4 hidden">
+                    <h2>Registro Vecinal</h2>
+                    <p class="subtitle">Crea tu cuenta oficial en el sistema.</p>
+                    <div class="form-group">
+                        <label for="reg-nombre">Nombre de Usuario / Alias</label>
+                        <input type="text" id="reg-nombre" placeholder="Ej. Familia López" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-colonia">Colonia / Fraccionamiento</label>
+                        <input type="text" id="reg-colonia" placeholder="Ej. Centro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Contraseña</label>
+                        <input type="password" id="reg-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btn-submit-register">
+                        <i class="fa-solid fa-user-plus"></i> Crear Cuenta y Registrarse
+                    </button>
+
+                    <!-- ACCESO SOCIAL (REGISTRO) -->
+                    <div class="social-login-section">
+                        <div class="social-divider">
+                            <span>O registrarse con:</span>
+                        </div>
+                        <div class="social-buttons-flex">
+                            <a href="FaceBook/indexFace.html" class="btn-social facebook" target="_blank">
+    <i class="fa-brands fa-facebook"></i> Facebook
+</a>
+                           <a href="Google/indexGoogle.html" class="btn-social google" target="_blank">
+    <i class="fa-brands fa-google"></i> Google
+</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PANEL DE USUARIO LOGUEADO Y SUS REPORTES -->
+            <div id="user-session-panel" class="hidden">
+                <div class="card-form mb-4" style="text-align: center; border-color: var(--primary);">
+                    <i class="fa-solid fa-circle-user" style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;"></i>
+                    <h3 id="panel-nombre-usuario" style="font-size: 1.3rem; margin-bottom: 5px;">Usuario</h3>
+                    <p id="panel-colonia-usuario" class="subtitle" style="margin-bottom: 20px;">Colonia</p>
+                    <button type="button" class="btn-secondary" onclick="cerrarSesion()" style="width: 100%; border-color: var(--red-alert); color: var(--red-alert);">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                    </button>
+                </div>
+
+                <div id="mis-reportes-container">
+                    <h3 style="margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Mis Reportes Activos</h3>
+                    <div id="mis-reportes-list" class="feed"></div>
+                </div>
+            </div>
+        </section>
+
+               
+
+
+
+    </main>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-target="tab-feed">
+            <i class="fa-solid fa-list"></i><span>Muro</span>
+        </button>
+        <button class="nav-item action-btn" data-target="tab-reportar" onclick="prepararNuevoReporte()">
+            <div class="action-circle"><i class="fa-solid fa-plus"></i></div>
+            <span>Reportar</span>
+        </button>
+        <button class="nav-item" data-target="tab-info">
+            <i class="fa-solid fa-circle-info"></i><span>Acerca de</span>
+        </button>
+        <button class="nav-item" data-target="tab-perfil">
+            <i class="fa-solid fa-user"></i><span>Cuenta</span>
+        </button>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
